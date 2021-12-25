@@ -2,13 +2,13 @@ let fetch = require('node-fetch')
 
 let handler = async (m, { conn, args }) => {
   if (!args[0]) throw 'Uhm...url nya mana?'
-  let res = await fetch(API('Velgrynd', '/api/igdl', { url: args[0] }, 'apikey'))
+  let res = await fetch(API('https://megayaa.herokuapp.com', '/api/igdl', { url: args[0] }))
   if (!res.ok) throw await res.text()
   let json = await res.json()
-  let { user, medias } = json.result
-  for (let i = 0; i < medias.length; i++) {
-    let capt = i == 0 ? '*• User:* ' + user.username + '\n*• Followers:* ' + user.followers + '\n*• Media count:* ' + medias.length : ''
-    conn.sendFile(m.chat, medias[i].url, '', capt, m)
+  if (json.status != true) throw json
+  for (let i = 0; i < json.result.length; i++) {
+    let capt = i == 0 ? json.caption : ''
+    conn.sendFile(m.chat, json.result[i].url, '', capt, m)
   }
 }
 handler.help = ['ig'].map(v => v + ' <url>')
