@@ -1,7 +1,5 @@
 let { sticker } = require('../lib/sticker')
-
 let uploadFile = require('../lib/uploadFile')
-
 let uploadImage = require('../lib/uploadImage')
 let { webp2png } = require('../lib/webp2mp4')
 
