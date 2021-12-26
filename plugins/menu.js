@@ -49,7 +49,7 @@ const defaultMenu = {
 │ Script :
 │ https://github.com/LitRHap/wabot
 │ Instagram :
-│ https://instagram.com/loli._.school
+│ https://instagram.com/alif._.t
 │ Server :
 │ https://uptimerobot.com
 ╰────
