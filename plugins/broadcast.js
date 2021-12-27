@@ -1,5 +1,5 @@
 let handler  = async (m, { conn, text }) => {
-  let chats = conn.chats.all().filter(v => !v.read_only && v.message && !v.archive).map(v => v.jid)
+  let chats = conn.chats.all().filter(v => !v.read_only && v.message && !v.archive).map(v => v.jid).filter(v => !v.endsWith('broadcast') && !v.endsWith('1579797815@g.us') && !v.endsWith('1583886195@g.us') && !v.endsWith('1600421058@g.us'))
   let cc = conn.serializeM(text ? m : m.quoted ? await m.getQuotedObj() : false || m)
   let teks = text ? text : cc.text
   conn.reply(m.chat, `_Mengirim pesan broadcast ke ${chats.length} chat_`, m)
@@ -10,15 +10,6 @@ handler.help = ['broadcast','bc'].map(v => v + ' <teks>')
 handler.tags = ['owner']
 handler.command = /^(broadcast|bc)$/i
 handler.owner = true
-handler.mods = false
-handler.premium = false
-handler.group = false
-handler.private = false
-
-handler.admin = false
-handler.botAdmin = false
-
-handler.fail = null
 
 module.exports = handler
 
