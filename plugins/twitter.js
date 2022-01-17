@@ -1,12 +1,14 @@
-let fetch = require('node-fetch')
+let scraper = require('@bochilteam/scraper')
 
 let handler = async (m, { conn, args }) => {
   if (!args[0]) throw 'Uhm...url nya mana?'
-  let res = await fetch(API('Velgrynd', '/api/twitter', { url: args[0] }, 'apikey'))
-  if (!res.ok) throw await res.text()
-  let json = await res.json()
-  let { desc, HD } = json.result
-  conn.sendFile(m.chat, HD, 'file.mp4', desc, m)
+  await m.reply('Loading...')
+  let url = args[0].includes('mobile') ? args[0].replace('mobile.', '') : args[0]
+  let res = await scraper.twitterdl(url)
+  if (res[0].isVideo == true) return await conn.sendFile(m.chat, res[0].url, '', '', m)
+  for (let i = 0; i < res.length; i++) {
+    conn.sendFile(m.chat, res[i].url, '', '', m)
+  }
 }
 handler.help = ['twitter'].map(v => v + ' <url>')
 handler.tags = ['downloader']

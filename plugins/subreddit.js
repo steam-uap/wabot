@@ -6,7 +6,7 @@ let handler = async (m, { conn, text }) => {
   if (!res.ok) throw await res.text()
   let json = await res.json()
   if (!json.url) throw 'Media tidak ditemukan!'
-  await conn.sendMessage(m.chat, { url: json.url }, 'imageMessage', { quoted: m, caption: json.title, thumbnail: fs.readFileSync('./Images3.jpg')})
+  await conn.sendMessage(m.chat, { url: json.url }, 'imageMessage', { quoted: m, caption: json.title, thumbnail: thumb})
 }
 handler.help = ['subreddit <query>']
 handler.tags = ['internet']

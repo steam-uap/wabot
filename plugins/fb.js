@@ -1,14 +1,11 @@
-const fetch = require('node-fetch')
+let scraper = require('@bochilteam/scraper')
+
 let handler = async (m, { conn, args, usedPrefix, command }) => {
   if (!args[0]) throw `uhm.. url nya mana?\n\ncontoh:\n${usedPrefix + command} https://www.facebook.com/alanwalkermusic/videos/277641643524720`
-  if (/^https?:\/\/.*(fb.watch|facebook.com)/i.test(m.text)) throw `url salah`
-
-  let res = await fetch(API('neoxr', '/api/download/fb', { url: args[0] }, 'apikey'))
-  if (!res.ok) throw eror
-  let json = await res.json()
-  if (!json.status) throw json
-  await m.reply(wait)
-  await conn.sendFile(m.chat, json.data.sd.url, '', `HD: ${json.data.hd.url}\nUkuran: ${json.data.hd.size}\n\n${watermark}`, m)
+  await m.reply('Loading...')
+  let res = await scraper.facebookdl(args[0])
+  let data = res.result.filter(v => /true/.test(v.isVideo) && /mp4/.test(v.ext))
+  await conn.sendFile(m.chat, data[1].url, '', `HD: ${data[0].url}`, m)
 }
 handler.help = ['fb'].map(v => v + ' <url>')
 handler.tags = ['downloader']
