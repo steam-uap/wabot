@@ -16,7 +16,7 @@ let handler = async (m, { conn, args, isPrems, isOwner }) => {
 *${isLimit ? 'Pakai ': ''}Link:* ${dl_link}
 `.trim(), m)
 	let _thumb = {}
-	try { _thumb = { thumbnail: await (await fetch(videos[0].image)).buffer() } }
+	try { _thumb = { thumbnail: await (await fetch(json.result.videoDetails.thumbnails[0].url)).buffer() } }
 	catch (e) { }
 	if (!isLimit) conn.sendFile(m.chat, res, json.result.videoDetails.title + '.mp4', `
 *Title:* ${json.result.videoDetails.title}
