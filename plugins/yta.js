@@ -1,33 +1,25 @@
 let limit = 30
-const { servers, yta } = require('../lib/y2mate')
-let handler = async (m, { conn, args, isPrems, isOwner, usedPrefix, command }) => {
-  if (!args || !args[0]) throw `contoh:\n${usedPrefix + command} https://www.youtube.com/watch?v=yxDdj_G9uRY`
-  let chat = global.db.data.chats[m.chat]
-  let server = (args[1] || servers[0]).toLowerCase()
-  let { dl_link, thumb, title, filesize, filesizeF } = await yta(args[0], servers.includes(server) ? server : servers[0])
-  let isLimit = (isPrems || isOwner ? 99 : limit) * 1024 < filesize
-  m.reply(isLimit ? `Ukuran File: ${filesizeF}\nUkuran file diatas ${limit} MB, download sendiri: ${dl_link}` : global.wait)
-  if (!isLimit) conn.sendFile(m.chat, dl_link, title + '.mp3', `
-*Judul:* ${title}
-*Ukuran File:* ${filesizeF}
-`.trim(), m, null, {
-    asDocument: chat.useDocument, mimetype: 'audio/mp4'
-  })
+let fetch = require('node-fetch')
+
+let handler = async (m, { conn, args, isPrems, isOwner }) => {
+	if (!args || !args[0]) throw 'Uhm... urlnya mana?'
+	let chat = db.data.chats[m.chat]
+	let dl_link = `https://yt-downloader.akkun3704.repl.co/?url=${args[0]}&filter=audioonly&quality=&contenttype=audio/mp3`
+	let json = await (await fetch(`https://yt-downloader.akkun3704.repl.co/yt?url=${args[0]}`)).json()
+	let res = await (await fetch(dl_link)).buffer()
+	let isLimit = (isPrems || isOwner ? 99 : limit) * 1000000 < res.length
+	conn.sendFile(m.chat, `https://i.ytimg.com/vi/${json.result.videoDetails.videoId}/0.jpg`, 'thumbnail.jpg', `
+*Title:* ${json.result.videoDetails.title}
+*Upload:* ${json.result.videoDetails.uploadDate}
+*Views:* ${json.result.videoDetails.viewCount}
+*Likes:* ${json.result.videoDetails.likes}
+*${isLimit ? 'Pakai ': ''}Link:* ${dl_link}
+`.trim(), m)
+	if (!isLimit) conn.sendFile(m.chat, res, json.result.videoDetails.title + '.mp3', '', m, false, { asDocument: chat.useDocument })
 }
-handler.help = ['mp3', 'a'].map(v => 'yt' + v + ` <url> [server: ${servers.join(', ')}]`)
+handler.help = ['mp3', 'a'].map(v => 'yt' + v)
 handler.tags = ['downloader']
 handler.command = /^yt(a|mp3)$/i
-handler.owner = false
-handler.mods = false
-handler.premium = false
-handler.group = false
-handler.private = false
-
-handler.admin = false
-handler.botAdmin = false
-
-handler.fail = null
-handler.exp = 0
 handler.limit = true
 
 module.exports = handler
