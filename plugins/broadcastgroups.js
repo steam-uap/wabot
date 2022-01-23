@@ -4,7 +4,7 @@ let handler  = async (m, { conn, text }) => {
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? itsu.user.jid : m.sender
   try {
     let pp = 'https://telegra.ph/file/cbdec8c4f4423a8ef6466.jpg'
-    pp = await itsu.getProfilePicture(who)}
+    pp = await conn.getProfilePicture(who)}
     catch (e){
     }
   const {
