@@ -3,7 +3,21 @@ let handler  = async (m, { conn, text }) => {
   let cc = text ? m : m.quoted ? await m.getQuotedObj() : false || m
   let teks = text ? text : cc.text
   conn.reply(m.chat, `_Mengirim pesan broadcast ke ${groups.length} grup_`, m)
-  for (let id of groups) await conn.copyNForward(id, conn.cMod(m.chat, cc, /bc|broadcast/i.test(teks) ? teks : teks + '\n' + readMore + '「 All Group Broadcast 」\n' + randomID(32)), true).catch(_=>_)
+  for (let id of groups) prep = conn.prepareMessageFromContent(id, { orderMessage: { 
+itemCount: -10112006, status: 500,
+surface: 999,
+message: teks + '\n' + readMore + '「 All Group Broadcast 」\n',
+description: 'pler',
+orderTitle: 'awikwok',
+token: '9',
+curreyCode: 'IDR',
+totalCurrencyCode: '>〰<',
+totalAmount1000: '1000000',
+sellerJid: '6283820073017@s.whatsapp.net',
+thumbnail: global.thumb3
+}}, {contextInfo: null, quoted: m})
+conn.relayWAMessage(prep)
+
   m.reply('Selesai Broadcast All Group :)')
 }
 handler.help = ['broadcastgroup','bcgc'].map(v => v + ' <teks>')
