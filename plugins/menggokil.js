@@ -3,7 +3,7 @@ let fe = require('node-fetch')
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? eror : m.sender
   let pp = 'https://telegra.ph/file/a2ae6cbfa40f6eeea0cf1.jpg'
   try {
-    pp = await itsu.getProfilePicture(who)
+    pp = await conn.getProfilePicture(who)
   } catch (e) {
 
   }
