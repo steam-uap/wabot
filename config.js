@@ -21,14 +21,14 @@ global.APIs = { // API Prefix
 }
 global.APIKeys = { // APIKey Here
   // 'https://website': 'apikey'
-  'https://api.xteam.xyz': 'AbilGanss',
+  'https://api.xteam.xyz': 'YOUR_APIKEY',
   'https://zahirr-web.herokuapp.com': 'zahirgans',
   'https://api.zeks.xyz': 'Nyarlathotep',
   'https://pencarikode.xyz': 'pais',
   'https://leyscoders-api.herokuapp.com': 'dappakntlll',
   'https://dhnjing.xyz': 'e2645065aaced89861b4',
   'https://neoxr-api.herokuapp.com': 'yntkts',
-  'https://velgrynd.herokuapp.com': ' ' // Please register if you want to get apikey 
+  'https://velgrynd.herokuapp.com': 'YOUR_APIKEY' // Please register if you want to get apikey 
 }
 
 // Sticker WM
