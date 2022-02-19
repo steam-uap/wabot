@@ -2,7 +2,7 @@
 const { MessageType } = require('@adiwajshing/baileys')
 const { sticker } = require('../lib/sticker')
 let handler  = async (m, { conn, args }) => {
-  let nick = conn.contacts[m.sender].notify
+  let nick = conn.getName(m.sender) || conn.contacts[m.sender].notify
 
 let gc = conn.getName(m.chat)
   let stiker = false
